@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirect based on availability</title>
+    <script>
+        // Define a list of URLs to check
+        var urls = ['https://linkbio.cc', 'https://mexink.com', 'https://linktree.cc'];
+
+        // Function to check URL availability
+        function checkURL(url, callback) {
+            fetch(url, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        callback(url);
+                    } else {
+                        callback(null);
+                    }
+                })
+                .catch(() => callback(null));
+        }
+
+        // Function to try URLs and redirect if available
+        function redirectToAvailableURL() {
+            for (let i = 0; i < urls.length; i++) {
+                checkURL(urls[i], function (availableURL) {
+                    if (availableURL) {
+                        window.location.href = availableURL;
+                    }
+                });
+            }
+        }
+
+        window.onload = redirectToAvailableURL;
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>
